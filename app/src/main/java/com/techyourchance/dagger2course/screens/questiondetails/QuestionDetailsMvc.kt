@@ -1,36 +1,31 @@
 package com.techyourchance.dagger2course.screens.questiondetails
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.IdRes
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.techyourchance.dagger2course.R
 import com.techyourchance.dagger2course.screens.common.toolbar.MyToolbar
+import com.techyourchance.dagger2course.screens.common.viewMvc.BaseMvc
 
 class QuestionDetailsMvc(
-    private val layoutInflater: LayoutInflater,
-    private val parent: ViewGroup?
+    layoutInflater: LayoutInflater, parent: ViewGroup?
+) : BaseMvc<QuestionDetailsMvc.Listener>(
+    layoutInflater, parent, R.layout.layout_question_details
 ) {
 
     interface Listener {
         fun onBackClicked()
     }
 
-    private lateinit var toolbar: MyToolbar
-    private lateinit var swipeRefresh: SwipeRefreshLayout
-    lateinit var txtQuestionBody: TextView
-
-    val rootView: View = layoutInflater.inflate(R.layout.layout_question_details, parent, false)
-    val listeners = hashSetOf<Listener>()
+    private var toolbar: MyToolbar = findViewById(R.id.toolbar)
+    private var swipeRefresh: SwipeRefreshLayout = findViewById(R.id.swipeRefresh)
+    var txtQuestionBody: TextView = findViewById(R.id.txt_question_body)
 
 
     init {
-        txtQuestionBody = findViewById(R.id.txt_question_body)
 
         // init toolbar
-        toolbar = findViewById(R.id.toolbar)
         toolbar.setNavigateUpListener {
             for (listener in listeners) {
                 listener.onBackClicked()
@@ -38,13 +33,9 @@ class QuestionDetailsMvc(
         }
 
         // init pull-down-to-refresh (used as a progress indicator)
-        swipeRefresh = findViewById(R.id.swipeRefresh)
         swipeRefresh.isEnabled = false
     }
 
-    private fun <T : View?> findViewById(@IdRes id: Int): T {
-        return rootView.findViewById<T>(id)
-    }
 
     fun showProgressIndication() {
         swipeRefresh.isRefreshing = true
@@ -54,13 +45,6 @@ class QuestionDetailsMvc(
         swipeRefresh.isRefreshing = false
     }
 
-    fun registerListener(listener: Listener) {
-        listeners.add(listener)
-    }
-
-    fun unregisterListener(listener: Listener) {
-        listeners.remove(listener)
-    }
 
 }
 
