@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
 import com.techyourchance.dagger2course.questions.Question
-import com.techyourchance.dagger2course.screens.common.dialogs.ServerErrorDialogFragment
+import com.techyourchance.dagger2course.screens.common.dialogs.DialogsNavigator
 import com.techyourchance.dagger2course.screens.questiondetails.QuestionDetailsActivity
 import kotlinx.coroutines.*
 
@@ -13,18 +13,20 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-
     private var isDataLoaded = false
 
     private lateinit var viewMvc: QuestionsListMvc
 
     private lateinit var fetchQuestionsUseCase: FetchQuestionsUseCase
 
+    private lateinit var dialogsNavigator: DialogsNavigator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewMvc = QuestionsListMvc(LayoutInflater.from(this), null)
         setContentView(viewMvc.rootView)
         fetchQuestionsUseCase = FetchQuestionsUseCase()
+        dialogsNavigator = DialogsNavigator(supportFragmentManager)
     }
 
     override fun onStart() {
@@ -45,7 +47,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListMvc.Listener {
         coroutineScope.launch {
             viewMvc.showProgressIndication()
             try {
-                when(val result = fetchQuestionsUseCase.fetchLatestQuestions()) {
+                when (val result = fetchQuestionsUseCase.fetchLatestQuestions()) {
                     is FetchQuestionsUseCase.Result.Success -> {
                         viewMvc.questionsAdapter.bindData(result.questions)
                         isDataLoaded = true
@@ -61,9 +63,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListMvc.Listener {
     }
 
     private fun onFetchFailed() {
-        supportFragmentManager.beginTransaction()
-                .add(ServerErrorDialogFragment.newInstance(), null)
-                .commitAllowingStateLoss()
+        dialogsNavigator.showServerErrorDialog()
     }
 
     override fun onRefreshClicked() {
