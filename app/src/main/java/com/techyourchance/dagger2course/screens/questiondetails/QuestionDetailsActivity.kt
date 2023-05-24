@@ -27,7 +27,7 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsMvc.Listener
         super.onCreate(savedInstanceState)
         viewMvc = QuestionDetailsMvc(LayoutInflater.from(this), null)
         setContentView(viewMvc.rootView)
-        fetchQuestionDetailsUseCase = FetchQuestionDetailsUseCase((application as MyApplication).retrofit)
+        fetchQuestionDetailsUseCase = FetchQuestionDetailsUseCase((application as MyApplication).stackoverflowApi)
         dialogsNavigator = DialogsNavigator(supportFragmentManager)
         screensNavigator = ScreensNavigator(this)
         // retrieve question ID passed from outside
