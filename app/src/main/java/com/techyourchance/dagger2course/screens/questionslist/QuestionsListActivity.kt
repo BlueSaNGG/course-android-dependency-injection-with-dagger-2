@@ -2,15 +2,14 @@ package com.techyourchance.dagger2course.screens.questionslist
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
-import com.techyourchance.dagger2course.MyApplication
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
 import com.techyourchance.dagger2course.questions.Question
+import com.techyourchance.dagger2course.screens.activity.BaseActivity
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import com.techyourchance.dagger2course.screens.common.dialogs.DialogsNavigator
 import kotlinx.coroutines.*
 
-class QuestionsListActivity : AppCompatActivity(), QuestionsListMvc.Listener {
+class QuestionsListActivity : BaseActivity(), QuestionsListMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -26,7 +25,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListMvc.Listener {
         super.onCreate(savedInstanceState)
         viewMvc = QuestionsListMvc(LayoutInflater.from(this), null)
         setContentView(viewMvc.rootView)
-        fetchQuestionsUseCase = (application as MyApplication).fetchQuestionsUseCase
+        fetchQuestionsUseCase = appCompositionRoot.fetchQuestionsUseCase
         dialogsNavigator = DialogsNavigator(supportFragmentManager)
         screensNavigator = ScreensNavigator(this)
     }
