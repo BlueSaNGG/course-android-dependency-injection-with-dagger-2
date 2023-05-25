@@ -3,7 +3,6 @@ package com.techyourchance.dagger2course.screens.questiondetails
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import com.techyourchance.dagger2course.questions.FetchQuestionDetailsUseCase
 import com.techyourchance.dagger2course.screens.activity.BaseActivity
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
@@ -24,7 +23,7 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsMvc.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewMvc = QuestionDetailsMvc(LayoutInflater.from(this), null)
+        viewMvc = compositionRoot.viewMvcFactory.newQuestionDetailViewMvc(null)
         setContentView(viewMvc.rootView)
         fetchQuestionDetailsUseCase = compositionRoot.fetchQuestionDetailsUseCase
         dialogsNavigator = compositionRoot.dialogsNavigator
