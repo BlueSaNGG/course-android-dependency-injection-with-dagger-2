@@ -17,7 +17,7 @@ class ActivityCompositionRoot(
 
     private val fragmentManager
         get() = activity.supportFragmentManager
-    
+
     val dialogsNavigator
         get() = DialogsNavigator(fragmentManager)
 
