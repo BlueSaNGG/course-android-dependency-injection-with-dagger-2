@@ -5,6 +5,7 @@ import com.techyourchance.dagger2course.questions.FetchQuestionDetailsUseCase
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import com.techyourchance.dagger2course.screens.common.dialogs.DialogsNavigator
+import com.techyourchance.dagger2course.screens.common.viewMvc.ViewMvcFactory
 
 class ActivityCompositionRoot(
     val activity: AppCompatActivity, private val appCompositionRoot: AppCompositionRoot
@@ -17,6 +18,9 @@ class ActivityCompositionRoot(
 
     private val fragmentManager
         get() = activity.supportFragmentManager
+
+    private val layoutInflater = activity.layoutInflater
+    val viewMvcFactory = ViewMvcFactory(layoutInflater)
 
     val dialogsNavigator
         get() = DialogsNavigator(fragmentManager)

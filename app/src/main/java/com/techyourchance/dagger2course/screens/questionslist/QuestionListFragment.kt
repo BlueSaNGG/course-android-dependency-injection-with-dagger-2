@@ -11,7 +11,7 @@ import com.techyourchance.dagger2course.screens.common.dialogs.DialogsNavigator
 import com.techyourchance.dagger2course.screens.fragment.BaseFragment
 import kotlinx.coroutines.*
 
-class QuestionListFragment: BaseFragment(),  QuestionsListMvc.Listener {
+class QuestionListFragment : BaseFragment(), QuestionsListMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -31,14 +31,13 @@ class QuestionListFragment: BaseFragment(),  QuestionsListMvc.Listener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        viewMvc = QuestionsListMvc(LayoutInflater.from(requireContext()), container)
+        viewMvc = compositionRoot.viewMvcFactory.newQuestionsListViewMvc(container)
         return viewMvc.rootView
 
     }
+
     override fun onStart() {
         super.onStart()
         if (!isDataLoaded) {
