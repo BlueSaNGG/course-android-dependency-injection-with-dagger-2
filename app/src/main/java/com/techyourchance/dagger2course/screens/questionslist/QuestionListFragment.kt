@@ -15,13 +15,13 @@ class QuestionListFragment : BaseFragment(), QuestionsListMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private var isDataLoaded = false
-
-    private lateinit var viewMvc: QuestionsListMvc
     private lateinit var fetchQuestionsUseCase: FetchQuestionsUseCase
-
     private lateinit var dialogsNavigator: DialogsNavigator
     private lateinit var screensNavigator: ScreensNavigator
+
+    private lateinit var viewMvc: QuestionsListMvc
+
+    private var isDataLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,6 @@ class QuestionListFragment : BaseFragment(), QuestionsListMvc.Listener {
     ): View? {
         viewMvc = compositionRoot.viewMvcFactory.newQuestionsListViewMvc(container)
         return viewMvc.rootView
-
     }
 
     override fun onStart() {

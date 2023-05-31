@@ -13,13 +13,13 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private lateinit var questionId: String
-
-    private lateinit var viewMvc: QuestionDetailsMvc
     private lateinit var fetchQuestionDetailsUseCase: FetchQuestionDetailsUseCase
-
     private lateinit var dialogsNavigator: DialogsNavigator
     private lateinit var screensNavigator: ScreensNavigator
+
+    private lateinit var viewMvc: QuestionDetailsMvc
+
+    private lateinit var questionId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,6 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsMvc.Listener {
         fetchQuestionDetailsUseCase = compositionRoot.fetchQuestionDetailsUseCase
         dialogsNavigator = compositionRoot.dialogsNavigator
         screensNavigator = compositionRoot.screensNavigator
-        // retrieve question ID passed from outside
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
     }
 
