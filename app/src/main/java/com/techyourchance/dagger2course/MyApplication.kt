@@ -8,7 +8,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        appCompositionRoot = AppCompositionRoot()
+        appCompositionRoot = AppCompositionRoot(this)
     }
 
 }

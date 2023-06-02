@@ -11,6 +11,9 @@ class ActivityCompositionRoot(
         ScreensNavigator(activity)
     }
 
+    val application
+        get() = appCompositionRoot.application
+
     val fragmentManager
         get() = activity.supportFragmentManager
 
