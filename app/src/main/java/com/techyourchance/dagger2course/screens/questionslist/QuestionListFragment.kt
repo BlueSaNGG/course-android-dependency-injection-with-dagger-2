@@ -8,6 +8,7 @@ import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
 import com.techyourchance.dagger2course.questions.Question
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import com.techyourchance.dagger2course.screens.common.dialogs.DialogsNavigator
+import com.techyourchance.dagger2course.screens.common.viewMvc.ViewMvcFactory
 import com.techyourchance.dagger2course.screens.fragment.BaseFragment
 import kotlinx.coroutines.*
 
@@ -15,9 +16,10 @@ class QuestionListFragment : BaseFragment(), QuestionsListMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private lateinit var fetchQuestionsUseCase: FetchQuestionsUseCase
-    private lateinit var dialogsNavigator: DialogsNavigator
-    private lateinit var screensNavigator: ScreensNavigator
+    lateinit var fetchQuestionsUseCase: FetchQuestionsUseCase
+    lateinit var dialogsNavigator: DialogsNavigator
+    lateinit var screensNavigator: ScreensNavigator
+    lateinit var viewMvcFactory: ViewMvcFactory
 
     private lateinit var viewMvc: QuestionsListMvc
 
@@ -25,15 +27,13 @@ class QuestionListFragment : BaseFragment(), QuestionsListMvc.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fetchQuestionsUseCase = compositionRoot.fetchQuestionsUseCase
-        dialogsNavigator = compositionRoot.dialogsNavigator
-        screensNavigator = compositionRoot.screensNavigator
+        injector.inject(this)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        viewMvc = compositionRoot.viewMvcFactory.newQuestionsListViewMvc(container)
+        viewMvc = viewMvcFactory.newQuestionsListViewMvc(container)
         return viewMvc.rootView
     }
 

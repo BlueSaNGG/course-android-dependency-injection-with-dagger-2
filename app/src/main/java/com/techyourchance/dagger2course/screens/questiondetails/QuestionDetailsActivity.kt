@@ -7,15 +7,17 @@ import com.techyourchance.dagger2course.questions.FetchQuestionDetailsUseCase
 import com.techyourchance.dagger2course.screens.activity.BaseActivity
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import com.techyourchance.dagger2course.screens.common.dialogs.DialogsNavigator
+import com.techyourchance.dagger2course.screens.common.viewMvc.ViewMvcFactory
 import kotlinx.coroutines.*
 
 class QuestionDetailsActivity : BaseActivity(), QuestionDetailsMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private lateinit var fetchQuestionDetailsUseCase: FetchQuestionDetailsUseCase
-    private lateinit var dialogsNavigator: DialogsNavigator
-    private lateinit var screensNavigator: ScreensNavigator
+    lateinit var fetchQuestionDetailsUseCase: FetchQuestionDetailsUseCase
+    lateinit var dialogsNavigator: DialogsNavigator
+    lateinit var screensNavigator: ScreensNavigator
+    lateinit var viewMvcFactory: ViewMvcFactory
 
     private lateinit var viewMvc: QuestionDetailsMvc
 
@@ -23,11 +25,11 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsMvc.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewMvc = compositionRoot.viewMvcFactory.newQuestionDetailViewMvc(null)
+        injector.inject(this)
+
+        viewMvc = viewMvcFactory.newQuestionDetailViewMvc(null)
         setContentView(viewMvc.rootView)
-        fetchQuestionDetailsUseCase = compositionRoot.fetchQuestionDetailsUseCase
-        dialogsNavigator = compositionRoot.dialogsNavigator
-        screensNavigator = compositionRoot.screensNavigator
+
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
     }
 
