@@ -2,8 +2,8 @@ package com.techyourchance.dagger2course.screens.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import com.techyourchance.dagger2course.MyApplication
-import com.techyourchance.dagger2course.common.composition.ActivityCompositionRoot
-import com.techyourchance.dagger2course.common.composition.PresentationCompositionRoot
+import com.techyourchance.dagger2course.common.dependencyInjection.ActivityCompositionRoot
+import com.techyourchance.dagger2course.common.dependencyInjection.PresentationCompositionRoot
 
 open class BaseActivity : AppCompatActivity() {
 

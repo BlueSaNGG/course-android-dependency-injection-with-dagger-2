@@ -1,4 +1,4 @@
-package com.techyourchance.dagger2course.common.composition
+package com.techyourchance.dagger2course.common.dependencyInjection
 
 import androidx.appcompat.app.AppCompatActivity
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
