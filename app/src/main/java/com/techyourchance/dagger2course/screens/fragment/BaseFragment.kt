@@ -13,8 +13,8 @@ open class BaseFragment : Fragment() {
 
 
     private val presentationComponent by lazy {
-        DaggerPresentationComponent.builder()
-            .presentationModule(PresentationModule(activityComponent)).build()
+        DaggerPresentationComponent.builder().activityComponent(activityComponent)
+            .presentationModule(PresentationModule()).build()
     }
 
     protected val injector
