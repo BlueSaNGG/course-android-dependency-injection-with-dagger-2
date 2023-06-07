@@ -5,11 +5,10 @@ import com.techyourchance.dagger2course.screens.questionslist.QuestionListFragme
 import dagger.Subcomponent
 
 @PresentationScope
-@Subcomponent(modules = [PresentationModule::class])
+@Subcomponent()
 interface PresentationComponent {
 
     fun inject(fragment: QuestionListFragment)
-
     fun inject(activity: QuestionDetailsActivity)
 
 }
