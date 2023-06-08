@@ -1,6 +1,7 @@
 package com.techyourchance.dagger2course.common.dependencyInjection.activity
 
 import androidx.appcompat.app.AppCompatActivity
+import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import dagger.Module
 import dagger.Provides
 
@@ -8,6 +9,10 @@ import dagger.Provides
 class ActivityModule(
     private val activity: AppCompatActivity
 ) {
+
+    @Provides
+    @ActivityScope
+    fun screensNavigator(activity: AppCompatActivity) = ScreensNavigator(activity)
 
     @Provides
     fun fragmentManager() = activity.supportFragmentManager
